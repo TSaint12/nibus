@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Amazing Spider-Man Omnibus",
+    "volume": 1,
+    "publisher": "Marvel",
+    "format": "omnibus",
+    "year": 2007,
+    "pages": 1104,
+    "isbn": "9780785122906",
+    "collects": "Amazing Fantasy #15, Amazing Spider-Man #1-38, Annual #1-2",
+    "authors": "Stan Lee",
+    "artists": "Steve Ditko, Jack Kirby"
+  },
+  {
+    "title": "Amazing Spider-Man Omnibus",
+    "volume": 2,
+    "publisher": "Marvel",
+    "format": "omnibus",
+    "year": 2012,
+    "pages": 1120,
+    "isbn": "9780785163473",
+    "collects": "Amazing Spider-Man #39-67, Annual #3-5",
+    "authors": "Stan Lee",
+    "artists": "Steve Ditko, John Romita Sr."
+  },
+  {
+    "title": "Batman: The Dark Knight Detective",
+    "volume": 1,
+    "publisher": "DC",
+    "format": "dc_absolute",
+    "year": 2018,
+    "pages": 312,
+    "isbn": "9781401280635",
+    "collects": "Detective Comics #575-578, 582-585, 587-590, 592-595, Batman #404-407",
+    "authors": "Mike W. Barr",
+    "artists": "Alan Davis, Norm Breyfogle"
+  },
+  {
+    "title": "Walking Dead Compendium",
+    "volume": 1,
+    "publisher": "Image",
+    "format": "compendium",
+    "year": 2009,
+    "pages": 1088,
+    "isbn": "9781607060765",
+    "collects": "The Walking Dead #1-48",
+    "authors": "Robert Kirkman",
+    "artists": "Tony Moore, Charlie Adlard"
+  }
+]
