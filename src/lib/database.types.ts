@@ -13,6 +13,7 @@ export interface User {
   name: string;
   avatar: string | null;
   bio: string | null;
+  is_pro: boolean;
   created_at: string;
 }
 
@@ -32,6 +33,7 @@ export interface Book {
   pages: number | null;
   isbn: string | null;
   collects: string | null;
+  synopsis: string | null;  // brief plot for the book page (distinct from `collects`)
   authors: string | null;   // comma-separated writers (free text, like `collects`)
   artists: string | null;   // comma-separated artists
   cover_url: string | null;

@@ -15,6 +15,7 @@ create table public.users (
   name text not null,
   avatar text,
   bio text,
+  is_pro boolean not null default false,  -- Pro flag (dormant until billing; gate via src/lib/pro.ts)
   created_at timestamptz default now()
 );
 
@@ -82,6 +83,7 @@ create table public.books (
   pages int,
   isbn text,
   collects text,                       -- free-text description of what issues/arcs are collected
+  synopsis text,                       -- brief plot for the book page (distinct from collects; migration 0005)
   authors text,                        -- comma-separated writers (free text, added in migration 0004)
   artists text,                        -- comma-separated artists
   cover_url text,
@@ -119,9 +121,11 @@ create table public.library_entries (
 
 alter table public.library_entries enable row level security;
 
--- Users can only see and edit their own library
-create policy "Users can view own library"
-  on public.library_entries for select using (auth.uid() = user_id);
+-- library_entries are publicly readable (book-page averages + followed-user
+-- ratings, migration 0005). Writes stay owner-scoped via the ALL policy below;
+-- app reads scope to the current user explicitly (RLS no longer does it).
+create policy "Library entries are viewable by everyone"
+  on public.library_entries for select using (true);
 
 create policy "Users can manage own library"
   on public.library_entries for all using (auth.uid() = user_id);
@@ -237,3 +241,8 @@ create index idx_follows_follower_id on public.follows(follower_id);
 create index idx_follows_followee_id on public.follows(followee_id);
 create index idx_comments_event_id on public.comments(event_id);
 create index idx_reactions_event_id on public.reactions(event_id);
+
+-- Trending + book-page aggregates (migration 0005)
+create index idx_activity_events_type_created on public.activity_events(type, created_at desc);
+create index idx_library_entries_rating on public.library_entries(book_id) where rating is not null;
+create index idx_library_entries_tbr on public.library_entries(book_id) where tbr = true;

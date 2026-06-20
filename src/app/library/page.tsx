@@ -5,13 +5,14 @@ import { LibraryRow } from "@/components/library/LibraryRow";
 import type { Book, LibraryEntry, ReadingSession } from "@/lib/database.types";
 
 export default async function LibraryPage() {
-  await requireUser();
+  const user = await requireUser();
   const supabase = await createClient();
 
-  // The catalog is public; entries and open sessions are the current user's (RLS-scoped).
+  // The catalog is public. library_entries is now public-readable too (migration
+  // 0005), so scope it to the current user explicitly rather than relying on RLS.
   const [{ data: books }, { data: entries }, { data: sessions }] = await Promise.all([
     supabase.from("books").select("*").order("title").order("volume"),
-    supabase.from("library_entries").select("*"),
+    supabase.from("library_entries").select("*").eq("user_id", user.id),
     supabase.from("reading_sessions").select("*").is("finished_at", null),
   ]);
 

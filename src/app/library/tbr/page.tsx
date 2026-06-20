@@ -5,13 +5,14 @@ import { LibraryRow } from "@/components/library/LibraryRow";
 import type { Book, LibraryEntry, ReadingSession } from "@/lib/database.types";
 
 export default async function TbrPage() {
-  await requireUser();
+  const user = await requireUser();
   const supabase = await createClient();
 
-  // Only books the user has flagged TBR. Entries/sessions are RLS-scoped to them.
+  // Only books the user has flagged TBR. library_entries is public-readable
+  // (migration 0005), so scope to the current user explicitly.
   const [{ data: books }, { data: entries }, { data: sessions }] = await Promise.all([
     supabase.from("books").select("*").order("title").order("volume"),
-    supabase.from("library_entries").select("*").eq("tbr", true),
+    supabase.from("library_entries").select("*").eq("user_id", user.id).eq("tbr", true),
     supabase.from("reading_sessions").select("*").is("finished_at", null),
   ]);
 
