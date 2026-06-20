@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Dark-first: force dark by putting `.dark` on <html> (see layout.tsx). This
+   makes existing `dark:` utilities resolve to a class instead of the OS media
+   query, so the whole app renders dark regardless of system preference. A light
+   theme is deferred — don't hardcode hex anywhere; always reference the tokens. */
+@custom-variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  /* ── Raw brand palette ── */
+  --color-ink: #0F1422;        /* base background (dark-first) */
+  --color-ink-tile: #12182A;   /* app-icon tile / slightly lifted ink */
+  --color-slate: #1C2433;      /* cards, surfaces, chips */
+  --color-slate-2: #27324C;    /* raised surface / hover */
+  --color-foil: #D4A84B;       /* primary accent — value, ratings, the spine */
+  --color-foil-bright: #E6BC63;/* highlight on the foil (logo spine) */
+  --color-vermilion: #F0533A;  /* action — CTAs, logging, "do something" */
+  --color-pulp: #F2E7D3;       /* paper — primary text on dark, light surfaces */
+  --color-muted: #8A93A6;      /* secondary text */
+  --color-keyline: #14203A;    /* inked outline / logo on light bg */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* ── Semantic aliases (use these in components) ── */
+  --color-bg: var(--color-ink);
+  --color-surface: var(--color-slate);
+  --color-surface-raised: var(--color-slate-2);
+  --color-text: var(--color-pulp);
+  --color-text-muted: var(--color-muted);
+  --color-accent: var(--color-foil);     /* premium / ratings */
+  --color-action: var(--color-vermilion);/* buttons / logging */
+
+  /* ── Type ── */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Radius ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }

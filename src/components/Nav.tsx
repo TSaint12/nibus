@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getProfile } from "@/lib/auth";
 import { logout } from "@/app/auth/actions";
+import { Logo } from "@/components/brand/Logo";
 
 export async function Nav() {
   const profile = await getProfile();
@@ -8,8 +9,8 @@ export async function Nav() {
   return (
     <header className="border-b border-zinc-200 dark:border-zinc-800">
       <nav className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-3">
-        <Link href={profile ? "/library" : "/"} className="text-lg font-bold tracking-tight">
-          Nibus
+        <Link href={profile ? "/library" : "/"} aria-label="Nibus home">
+          <Logo layout="horizontal" size={28} />
         </Link>
 
         {profile ? (
